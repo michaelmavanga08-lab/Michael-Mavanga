@@ -1,0 +1,6 @@
+{
+  "name": "Devis de Construction Pro",
+  "description": "Application de devis complet de construction avec estimation des coûts de matériaux et main-d'œuvre, sauvegarde automatique, signature numérique, export PDF/CSV et mode hors-ligne.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
