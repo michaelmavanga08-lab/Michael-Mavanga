@@ -66,7 +66,7 @@ export const legacyItemToDomainLine = (
   designation: item.description,
   unit: normalizeUnit(item.unit),
   quantity: Math.max(0, item.quantity),
-  unitCost: Math.max(0, item.unitPrice),
+  unitCost: Math.max(0, item.unitCost),
   marginRate: Math.max(0, quoteMarginRate),
 });
 
