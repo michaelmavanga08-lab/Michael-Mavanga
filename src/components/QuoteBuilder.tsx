@@ -20,6 +20,10 @@ import {
   Calculator
 } from 'lucide-react';
 import { translations, priceCatalog, formatCurrency } from '../locales';
+import {
+  legacyQuoteToDomainQuote,
+  calculateQuoteTotals,
+} from '../domain';
 import { Quote, QuoteItem, ItemCategory, ItemType, AppLanguage, QuoteStatus } from '../types';
 import SignatureCanvas from './SignatureCanvas';
 
@@ -101,8 +105,12 @@ export default function QuoteBuilder({ quote, language, onSaveQuote, onBack }: Q
   };
 
   // Handle line item cell edits
-  const handleItemChange = (itemId: string, field: keyof QuoteItem, value: any) => {
-    const updatedItems = localQuote.items.map((item) => {
+ const handleItemChange = (
+  itemId: string,
+  field: keyof QuoteItem,
+  value: any,
+) => {
+     const updatedItems = localQuote.items.map((item) => {
       if (item.id !== itemId) return item;
 
       let updated = { ...item, [field]: value };
@@ -195,30 +203,19 @@ export default function QuoteBuilder({ quote, language, onSaveQuote, onBack }: Q
   };
 
   // Calculation of totals
-  const financials = React.useMemo(() => {
-    let subtotalCost = 0;
-    let subtotalSale = 0;
+ const financials = React.useMemo(() => {
+  const domainQuote = legacyQuoteToDomainQuote(localQuote);
+  const totals = calculateQuoteTotals(domainQuote);
 
-    localQuote.items.forEach((item) => {
-      subtotalCost += item.unitCost * item.quantity;
-      subtotalSale += item.unitPrice * item.quantity;
-    });
-
-    const discountAmount = subtotalSale * (localQuote.discount / 100);
-    const subtotalAfterDiscount = subtotalSale - discountAmount;
-    const vatAmount = subtotalAfterDiscount * (localQuote.taxRate / 100);
-    const totalTTC = subtotalAfterDiscount + vatAmount;
-
-    return {
-      subtotalCost,
-      subtotalSale,
-      discountAmount,
-      subtotalAfterDiscount,
-      vatAmount,
-      totalTTC
-    };
-  }, [localQuote.items, localQuote.discount, localQuote.taxRate]);
-
+  return {
+    subtotalCost: totals.costTotal,
+    subtotalSale: totals.subtotal,
+    discountAmount: totals.discountAmount,
+    subtotalAfterDiscount: totals.taxableAmount,
+    vatAmount: totals.taxAmount,
+    totalTTC: totals.total,
+  };
+}, [localQuote]);
   // Filter catalog items
   const filteredCatalog = priceCatalog.filter((item) => {
     const matchesSearch = 
