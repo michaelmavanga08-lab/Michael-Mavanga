@@ -8,8 +8,8 @@ import { AppLanguage, ItemCategory, ItemType, QuoteStatus } from './types';
 export const translations = {
   fr: {
     // App general
-    appName: "Devis de Construction Pro",
-    appSubtitle: "Solution de chiffrage chantier & signature sur place",
+    appName: "Ndaku nayo Architecture & Construction",
+    appSubtitle: "Solution professionnelle de chiffrage et gestion des devis de construction",
     searchPlaceholder: "Rechercher un client, numéro de devis...",
     language: "Langue",
     theme: "Thème",
