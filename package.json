@@ -1,8 +1,9 @@
 {
-  "name": "react-example",
+  "name": "nac-construction",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.0",
   "type": "module",
+  "description": "Ndaku nayo Architecture & Construction - application de chiffrage et gestion des devis de construction",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
